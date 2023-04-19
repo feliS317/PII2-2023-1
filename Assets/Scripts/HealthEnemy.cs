@@ -17,7 +17,6 @@ public class HealthEnemy : MonoBehaviour
     void Start()
     {
         player = GameObject.FindWithTag("Player");
-        hitbox = GameObject.FindWithTag("Player").transform.Find("Hitbox").gameObject;
         anim = GetComponent<Animator>();
         health = maxHealth;
     }

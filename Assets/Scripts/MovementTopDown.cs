@@ -30,12 +30,15 @@ public class MovementTopDown : MonoBehaviour
         MovementUpdate();
     }
 
+    void FixedUpdate() {
+        rb.velocity = new Vector2(characterSpeed * Input.GetAxisRaw("Horizontal"), characterSpeed * Input.GetAxisRaw("Vertical"));
+    }
+
     void MovementUpdate()
     {
         anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
         anim.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
         anim.SetFloat("Speed", rb.velocity.sqrMagnitude);
-        rb.velocity = new Vector2(characterSpeed * Input.GetAxisRaw("Horizontal"), characterSpeed * Input.GetAxisRaw("Vertical"));
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             characterSpeed = runSpeed;
@@ -44,6 +47,11 @@ public class MovementTopDown : MonoBehaviour
         {
             characterSpeed = walkSpeed;
         }
+    }
+
+    public void LastDir(int a)
+    {
+        anim.SetFloat("Dir", a);
     }
     
 }
