@@ -32,13 +32,10 @@ public class MovementTopDown : MonoBehaviour
 
     void MovementUpdate()
     {
+        anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
+        anim.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
+        anim.SetFloat("Speed", rb.velocity.sqrMagnitude);
         rb.velocity = new Vector2(characterSpeed * Input.GetAxisRaw("Horizontal"), characterSpeed * Input.GetAxisRaw("Vertical"));
-        if(rb.velocity.x > 0){
-            anim.SetBool("isMoving", true);
-        }
-        else{
-            anim.SetBool("isMoving", false);
-        }
         if(Input.GetKeyDown(KeyCode.LeftShift))
         {
             characterSpeed = runSpeed;
@@ -47,13 +44,6 @@ public class MovementTopDown : MonoBehaviour
         {
             characterSpeed = walkSpeed;
         }
-        /*if(rb.velocity.x < 0)
-        {
-            sr.flipX = true;
-        }
-        else if(rb.velocity.x > 0)
-        {
-            sr.flipX = false;
-        }*/
     }
+    
 }
