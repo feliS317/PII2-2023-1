@@ -8,23 +8,17 @@ public class MovementTopDown : MonoBehaviour
     [SerializeField] private GameObject player;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    private Animator anim;
+    public Animator anim;
 
     [Header("Movimiento")]
-    public float characterSpeed;
-
-    [Header("Salto")]
-    private bool canDoubleJump = true;
-    public float jumpForce;
-
-    [Header("Grounded")]
-    private bool isGrounded;
-    public Transform groundCheckpoint;
-    public LayerMask ground;
+    private float characterSpeed;
+    public float walkSpeed;
+    public float runSpeed;
 
     // Start is called before the first frame update
     void Start()
     {
+        characterSpeed = walkSpeed;
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
@@ -34,7 +28,6 @@ public class MovementTopDown : MonoBehaviour
     void Update()
     {
         MovementUpdate();
-        JumpingAndFalling();
     }
 
     void MovementUpdate()
@@ -46,6 +39,14 @@ public class MovementTopDown : MonoBehaviour
         else{
             anim.SetBool("isMoving", false);
         }
+        if(Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            characterSpeed = runSpeed;
+        }
+        if(Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            characterSpeed = walkSpeed;
+        }
         /*if(rb.velocity.x < 0)
         {
             sr.flipX = true;
@@ -54,26 +55,5 @@ public class MovementTopDown : MonoBehaviour
         {
             sr.flipX = false;
         }*/
-    }
-
-    void JumpingAndFalling()
-    {
-        isGrounded = Physics2D.OverlapCircle(groundCheckpoint.position, 0.1f, ground);
-        if(isGrounded)
-        {
-            canDoubleJump = true;
-            anim.SetBool("isJumping", false);
-        }
-        if(Input.GetButtonDown("Jump")){
-            if(isGrounded || canDoubleJump)
-            {
-                anim.SetBool("isJumping", true);
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                if(!isGrounded && canDoubleJump)
-                {
-                    canDoubleJump = false;
-                }
-            }    
-        }
     }
 }
