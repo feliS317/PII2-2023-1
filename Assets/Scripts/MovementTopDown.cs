@@ -6,6 +6,7 @@ public class MovementTopDown : MonoBehaviour
 {
     [Header("Componentes")]
     [SerializeField] private GameObject player;
+    [SerializeField] private GameObject hitbox;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     public Animator anim;
@@ -28,6 +29,7 @@ public class MovementTopDown : MonoBehaviour
     void Update()
     {
         MovementUpdate();
+        Attack();
     }
 
     void FixedUpdate() {
@@ -49,9 +51,22 @@ public class MovementTopDown : MonoBehaviour
         }
     }
 
+    void Attack()
+    {
+        if(Input.GetButtonDown("Fire1"))
+        {
+            hitbox.GetComponent<Attack>().AttackAnimation();
+        }
+    }
+
     public void LastDir(int a)
     {
         anim.SetFloat("Dir", a);
+    }
+
+    public void EndAttack()
+    {
+        hitbox.GetComponent<Attack>().EndAttack();
     }
     
 }
