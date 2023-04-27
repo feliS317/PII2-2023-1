@@ -9,7 +9,8 @@ public class MovementTopDown : MonoBehaviour
     [SerializeField] private GameObject hitbox;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
-    public Animator anim;
+    private Animator anim;
+    private Animator weapon;
 
     [Header("Movimiento")]
     private float characterSpeed;
@@ -23,6 +24,7 @@ public class MovementTopDown : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
+        weapon = hitbox.GetComponent<Animator>();
     }
 
     // Update is called once per frame
@@ -49,6 +51,7 @@ public class MovementTopDown : MonoBehaviour
         {
             characterSpeed = walkSpeed;
         }
+        LastDirection();
     }
 
     void Attack()
@@ -59,9 +62,24 @@ public class MovementTopDown : MonoBehaviour
         }
     }
 
-    public void LastDir(int a)
+    void LastDirection()
     {
-        anim.SetFloat("Dir", a);
+        if(Input.GetAxisRaw("Horizontal") > 0){
+            anim.SetFloat("Dir", 1);
+            weapon.SetFloat("Dir", 1);
+        }
+        if(Input.GetAxisRaw("Horizontal") < 0){
+            anim.SetFloat("Dir", 3);
+            weapon.SetFloat("Dir", 3);
+        }
+        if(Input.GetAxisRaw("Vertical") > 0){
+            anim.SetFloat("Dir", 0);
+            weapon.SetFloat("Dir", 0);
+        }
+        if(Input.GetAxisRaw("Vertical") < 0){
+            anim.SetFloat("Dir", 2);
+            weapon.SetFloat("Dir", 2);
+        }   
     }
 
     public void EndAttack()

@@ -7,6 +7,7 @@ public class Attack : MonoBehaviour
     [Header("Componentes")]
     [SerializeField] private BoxCollider2D hitbox;
     [SerializeField] private Animator animator;
+    [SerializeField] private Animator weapon;
     [Header("Values")]
     [SerializeField] private float damage = 10f;
     [SerializeField] private float atkCooldown = 0.8f;
@@ -41,12 +42,14 @@ public class Attack : MonoBehaviour
             attacking = true;
             hitbox.enabled = true;
             animator.SetBool("isAttacking", true);
+            weapon.SetBool("isAttacking", true);
         }
     }
 
     public void EndAttack()
     {
         animator.SetBool("isAttacking", false);
+        weapon.SetBool("isAttacking", false);
         attacking = false;
         hitbox.enabled = false;
         StartCoroutine(AttackCooldown(atkCooldown));
