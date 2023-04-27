@@ -13,7 +13,8 @@ public class Attack : MonoBehaviour
     [SerializeField] private float atkCooldown = 0.8f;
     public bool attacking = false;
     private bool canAttack = true;
-    [SerializeField] AudioClip[] sfx;
+    [SerializeField] AudioClip[] atksound;
+    [SerializeField] AudioClip stepsound;
     [SerializeField] AudioController controller;
     int randomSfx;
     
@@ -38,7 +39,7 @@ public class Attack : MonoBehaviour
         if(canAttack)
         {
             randomSfx = Random.Range(0, 3);
-            controller.PlaySfx(sfx[randomSfx]);
+            controller.PlaySfx(atksound[randomSfx]);
             attacking = true;
             hitbox.enabled = true;
             animator.SetBool("isAttacking", true);
