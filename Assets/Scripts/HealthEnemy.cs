@@ -4,11 +4,10 @@ using UnityEngine;
 
 public class HealthEnemy : MonoBehaviour
 {
-    [SerializeField] private bool enemy;
     [SerializeField] private float maxHealth = 20f;
     
     private GameObject player;
-    private GameObject hitbox;
+    private Attack playerAttack;
     private Animator anim;
     public float health;
     private bool attacked = false;
@@ -16,7 +15,8 @@ public class HealthEnemy : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        player = GameObject.FindWithTag("Player");
+        player = GameObject.Find("AttackPlayer");
+        playerAttack = player.GetComponent<Attack>();
         anim = GetComponent<Animator>();
         health = maxHealth;
     }
@@ -24,13 +24,13 @@ public class HealthEnemy : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        /*if(enemy && attacked)
+        if(attacked)
         {
-            if(!hitbox.GetComponent<Attack>().attacking)
+            if(!playerAttack.attacking)
             {
                 attacked = false;
             }
-        }*/
+        }
     }
 
     public void UpdateHealth(float mod)
@@ -38,7 +38,7 @@ public class HealthEnemy : MonoBehaviour
         if(!attacked)
         {   
             health += mod;
-            if(mod < 0 && enemy)
+            if(mod < 0)
             {
                 attacked = true;
             }

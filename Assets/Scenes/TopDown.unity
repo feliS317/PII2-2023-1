@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 65918394}
   - component: {fileID: 65918393}
   m_Layer: 0
-  m_Name: Attack
+  m_Name: AttackPlayer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -165,10 +165,10 @@ BoxCollider2D:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65918388}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Density: 1
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_UsedByEffector: 0
   m_UsedByComposite: 0
   m_Offset: {x: 0.004144989, y: -0.0041449964}
@@ -11104,7 +11104,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 0
+  m_Constraints: 4
 --- !u!114 &1465267937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11370,9 +11370,10 @@ GameObject:
   - component: {fileID: 1697287527}
   - component: {fileID: 1697287526}
   - component: {fileID: 1697287525}
+  - component: {fileID: 1697287529}
   m_Layer: 0
   m_Name: Vaca
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11410,7 +11411,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f13eb4bffbb7117428a4fa7aea285fa0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  enemy: 0
   maxHealth: 20
   health: 0
 --- !u!212 &1697287527
@@ -11480,6 +11480,32 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &1697287529
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1697287524}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0.5, y: 0.5}
+    oldSize: {x: 1.6875, y: 1.125}
+    newSize: {x: 1.6875, y: 1.125}
+    adaptiveTilingThreshold: 0.5
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  serializedVersion: 2
+  m_Size: {x: 1.6875, y: 1.125}
+  m_EdgeRadius: 0
 --- !u!1 &1850430845
 GameObject:
   m_ObjectHideFlags: 0

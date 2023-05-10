@@ -23,17 +23,6 @@ public class Attack : MonoBehaviour
         controller = GameObject.Find("Audio").GetComponent<AudioController>();
         hitbox.enabled = false;
     }
-
-    public void Left()
-    {
-        hitbox.transform.localScale = new Vector3(-1f, 1f, 1f);
-    }
-
-    public void Right()
-    {
-        hitbox.transform.localScale = new Vector3(1f, 1f, 1f);
-    }
-
     public void AttackAnimation()
     {
         if(canAttack)
@@ -46,7 +35,6 @@ public class Attack : MonoBehaviour
             weapon.SetBool("isAttacking", true);
         }
     }
-
     public void EndAttack()
     {
         animator.SetBool("isAttacking", false);
@@ -56,13 +44,13 @@ public class Attack : MonoBehaviour
         StartCoroutine(AttackCooldown(atkCooldown));
     }
 
-    /*private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "Enemy" && attacking == true)
         {
-            other.GetComponent<Health>().UpdateHealth(-damage);
+            other.GetComponent<HealthEnemy>().UpdateHealth(-damage);
         }
-    }*/
+    }
 
     public IEnumerator AttackCooldown(float atkCooldown)
     {
