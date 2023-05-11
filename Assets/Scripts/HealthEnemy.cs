@@ -11,7 +11,7 @@ public class HealthEnemy : MonoBehaviour
     private Animator anim;
     public float health;
     private bool attacked = false;
-    public static string level;
+    public static int level;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,6 +19,8 @@ public class HealthEnemy : MonoBehaviour
         playerAttack = player.GetComponent<Attack>();
         anim = GetComponent<Animator>();
         health = maxHealth;
+        Debug.Log("Se inicio el objeto");
+        level++;
     }
 
     // Update is called once per frame
@@ -48,7 +50,7 @@ public class HealthEnemy : MonoBehaviour
             }
             if(health <= 0)
             {
-                Die();
+                Destroy();
             }
         }
     }
@@ -59,6 +61,7 @@ public class HealthEnemy : MonoBehaviour
     }
     public void Destroy()
     {
+        level--;
         Destroy(gameObject);
     }
 }

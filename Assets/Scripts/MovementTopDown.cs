@@ -7,6 +7,7 @@ public class MovementTopDown : MonoBehaviour
     [Header("Componentes")]
     [SerializeField] private GameObject player;
     [SerializeField] private GameObject hitbox;
+    private HealthPlayer health;
     private Rigidbody2D rb;
     private SpriteRenderer sr;
     private Animator anim;
@@ -25,6 +26,7 @@ public class MovementTopDown : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         weapon = hitbox.GetComponent<Animator>();
+        health = this.GetComponent<HealthPlayer>();
     }
 
     // Update is called once per frame

@@ -24,16 +24,13 @@ public class HealthPlayer : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        
     }
 
     public void UpdateHealth(float mod)
     {       
         health += mod;
-        if(mod < 0 && enemy)
-        {
-            attacked = true;
-        }
-        else if(health > maxHealth)
+        if(health > maxHealth)
         {
             health = maxHealth;
         }
