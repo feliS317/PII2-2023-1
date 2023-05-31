@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class MovementTopDown : MonoBehaviour
 {
@@ -12,8 +13,12 @@ public class MovementTopDown : MonoBehaviour
     private SpriteRenderer sr;
     private Animator anim;
     private Animator weapon;
+    private Vector2 movementAxis = Vector2.zero;
+
+    public PlayerInput _playerInput;
 
     [Header("Movimiento")]
+    
     private float characterSpeed;
     public float walkSpeed;
     public float runSpeed;
@@ -21,35 +26,42 @@ public class MovementTopDown : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        _playerInput = GetComponent<PlayerInput>();
         characterSpeed = walkSpeed;
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         anim = GetComponent<Animator>();
         weapon = hitbox.GetComponent<Animator>();
         health = this.GetComponent<HealthPlayer>();
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        MovementUpdate();
+        movementAxis = _playerInput.actions["Movement"].ReadValue<Vector2>();
         Attack();
+        if(!hitbox.GetComponent<Attack>().attacking)
+        {
+            MovementUpdate();
+        }  
     }
 
     void FixedUpdate() {
-        rb.velocity = new Vector2(characterSpeed * Input.GetAxisRaw("Horizontal"), characterSpeed * Input.GetAxisRaw("Vertical"));
+        
     }
 
     void MovementUpdate()
     {
-        anim.SetFloat("Horizontal", Input.GetAxisRaw("Horizontal"));
-        anim.SetFloat("Vertical", Input.GetAxisRaw("Vertical"));
+        rb.velocity = new Vector2(characterSpeed * movementAxis.x, characterSpeed * movementAxis.y);
+        anim.SetFloat("Horizontal", movementAxis.x);
+        anim.SetFloat("Vertical", movementAxis.y);
         anim.SetFloat("Speed", rb.velocity.sqrMagnitude);
-        if(Input.GetKeyDown(KeyCode.LeftShift))
+        if(_playerInput.actions["Run"].IsPressed())
         {
             characterSpeed = runSpeed;
         }
-        if(Input.GetKeyUp(KeyCode.LeftShift))
+        else
         {
             characterSpeed = walkSpeed;
         }
@@ -58,7 +70,8 @@ public class MovementTopDown : MonoBehaviour
 
     void Attack()
     {
-        if(Input.GetButtonDown("Fire1"))
+        rb.velocity = Vector2.zero;
+        if(_playerInput.actions["Attack"].WasPressedThisFrame())
         {
             hitbox.GetComponent<Attack>().AttackAnimation();
         }
@@ -66,27 +79,32 @@ public class MovementTopDown : MonoBehaviour
 
     void LastDirection()
     {
-        if(Input.GetAxisRaw("Horizontal") > 0){
-            anim.SetFloat("Dir", 1);
-            weapon.SetFloat("Dir", 1);
+        if(Mathf.Abs(movementAxis.x) > Mathf.Abs(movementAxis.y))
+        {
+            if(movementAxis.x > 0){
+                anim.SetFloat("Dir", 1);
+                weapon.SetFloat("Dir", 1);
+            }
+            if(movementAxis.x < 0){
+                anim.SetFloat("Dir", 3);
+                weapon.SetFloat("Dir", 3);
+            }
         }
-        if(Input.GetAxisRaw("Horizontal") < 0){
-            anim.SetFloat("Dir", 3);
-            weapon.SetFloat("Dir", 3);
+        else if(Mathf.Abs(movementAxis.y) > Mathf.Abs(movementAxis.x))
+        {
+            if(movementAxis.y > 0){
+                anim.SetFloat("Dir", 0);
+                weapon.SetFloat("Dir", 0);
+            }
+            if(movementAxis.y < 0){
+                anim.SetFloat("Dir", 2);
+                weapon.SetFloat("Dir", 2);
+            }
         }
-        if(Input.GetAxisRaw("Vertical") > 0){
-            anim.SetFloat("Dir", 0);
-            weapon.SetFloat("Dir", 0);
-        }
-        if(Input.GetAxisRaw("Vertical") < 0){
-            anim.SetFloat("Dir", 2);
-            weapon.SetFloat("Dir", 2);
-        }   
     }
 
     public void EndAttack()
     {
         hitbox.GetComponent<Attack>().EndAttack();
     }
-    
 }
