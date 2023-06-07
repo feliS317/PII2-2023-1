@@ -17,7 +17,7 @@ public class SceneManager : MonoBehaviour
         {
             playerTwo.SetActive(true);
             Targets[1].target = playerTwo.transform;
-            Targets[0].radius = 5.0f;
+            Targets[0].radius = 3.0f;
         }
     }
 }
